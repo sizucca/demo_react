@@ -1,4 +1,4 @@
-export default class Hoge {
+export default class {
   constructor(text) {
     this.text = text;
   }

@@ -1,7 +1,6 @@
 var gulp = require('gulp');
 var sequence= require('gulp-sequence');
 var clean = require('gulp-clean');
-var babel = require('gulp-babel');
 var webpack = require('gulp-webpack');
 var server = require('gulp-webserver');
 
@@ -11,7 +10,7 @@ gulp.task('default', function(callback) {
 
 gulp.task('clean', function () {
   return gulp.src(['build'])
-      .pipe(clean(['build']));
+      .pipe(clean());
 });
 
 gulp.task('build', function () {
