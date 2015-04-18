@@ -1,6 +1,4 @@
+import Hoge from './Hoge'
 require('../../styles/style.styl');
 
-export default class Hoge {
-  constructor() {
-  }
-}
+new Hoge('hoge').out();

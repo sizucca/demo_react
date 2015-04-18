@@ -1,11 +1,13 @@
 var gulp = require('gulp');
-var seq = require('gulp-sequence');
+var sequence= require('gulp-sequence');
 var clean = require('gulp-clean');
 var babel = require('gulp-babel');
 var webpack = require('gulp-webpack');
 var server = require('gulp-webserver');
 
-gulp.task('default', seq('clean', 'build', 'bundle'));
+gulp.task('default', function(callback) {
+  sequence('clean', 'build')(callback);
+});
 
 gulp.task('clean', function () {
   return gulp.src(['build'])
@@ -13,22 +15,18 @@ gulp.task('clean', function () {
 });
 
 gulp.task('build', function () {
-  return gulp.src(['src/*/*'])
-      .pipe(babel())
-      .pipe(gulp.dest('build'));
-});
-
-gulp.task('bundle', function () {
-  return gulp.src(['build/*/*'])
+  gulp.src(['src/*/*'])
       .pipe(webpack({
         module: {
           loaders: [
-            {test: /(\.css$|\.styl$)/, loader: 'style!css!stylus'}
+            {test: /(\.css$|\.styl$)/, loader: 'style!css!stylus'},
+            {test: /(\.js$|\.jsx$)/, loader: 'babel'}
           ]
         },
         output: {
           filename: 'bundle.js'
-        }
+        },
+        devtool: 'source-map'
       }))
       .pipe(gulp.dest('build'));
 });
