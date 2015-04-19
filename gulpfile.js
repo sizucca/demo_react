@@ -16,6 +16,7 @@ gulp.task('clean', function () {
 gulp.task('build', function () {
   gulp.src(['src/*/*'])
       .pipe(webpack({
+        entry: './src/main/entry.js',
         module: {
           loaders: [
             {test: /(\.css$|\.styl$)/, loader: 'style!css!stylus'},
