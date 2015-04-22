@@ -20,6 +20,8 @@
     "babel-loader": "~5.0.0",
     "gulp": "~3.8.11",
     "gulp-babel": "~5.1.0",
-    "gulp-webpack-build": "~0.7.1"
+    "gulp-webpack-build": "~0.7.1",
+    "react": "~0.13.2",
+    "flux": "~2.0.1"
   }
 }
