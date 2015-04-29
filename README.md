@@ -1,17 +1,19 @@
-# Install & Build
+# ES6+Webpack+gulp Template
+
+## Install & Build
 
 ```
 npm install
 gulp
 ```
 
-# hotload
+## start hotload
 
 ```
 gulp hotload
 ```
 
-# start webserver
+## start webserver
 
 ```
 gulp server
