@@ -5,7 +5,7 @@ var clean = require('gulp-clean');
 var webpack = require('gulp-webpack-build');
 var server = require('gulp-webserver');
 
-var dest = 'build'
+var dest = 'build',
     WPCONFIG_FILENAME = 'webpack.config.js',
     wpConfig = {
       useMemoryFs: true,
