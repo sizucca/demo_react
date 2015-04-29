@@ -1,10 +1,25 @@
+var path = require('path');
 var gulp = require('gulp');
-var sequence= require('gulp-sequence');
+var sequence = require('gulp-sequence');
 var clean = require('gulp-clean');
-var webpack = require('gulp-webpack');
+var webpack = require('gulp-webpack-build');
 var server = require('gulp-webserver');
 
-gulp.task('default', function(callback) {
+var dest = 'build'
+    WPCONFIG_FILENAME = 'webpack.config.js',
+    wpConfig = {
+      useMemoryFs: true,
+      progress: true
+    },
+    wpOptions = {
+      devtool: '#source-map'
+    },
+    wpFormat = {
+      version: true,
+      timings: true
+    };
+
+gulp.task('default', function (callback) {
   sequence('clean', 'build')(callback);
 });
 
@@ -14,26 +29,32 @@ gulp.task('clean', function () {
 });
 
 gulp.task('build', function () {
-  gulp.src(['src/*/*'])
-      .pipe(webpack({
-        entry: './src/main/entry.js',
-        module: {
-          loaders: [
-            {test: /\.css$/, loader: 'style!css'},
-            {test: /\.styl$/, loader: 'style!css!stylus'},
-            {test: /(\.js$|\.jsx$)/, loader: 'babel'}
-          ]
-        },
-        output: {
-          filename: 'bundle.js'
-        },
-        devtool: 'source-map'
+  gulp.src(WPCONFIG_FILENAME)
+      .pipe(webpack.configure(wpConfig))
+      .pipe(webpack.overrides(wpOptions))
+      .pipe(webpack.compile())
+      .pipe(webpack.format(wpFormat))
+      .pipe(webpack.failAfter({
+        errors: true,
+        warnings: true
       }))
-      .pipe(gulp.dest('build'));
+      .pipe(gulp.dest(dest));
 });
 
 gulp.task('hotload', function() {
-  gulp.watch(['src/*/*', 'styles/*'], ['default'])
+  gulp.watch(['src/*/*', 'styles/*']).on('change', function(event) {
+    if (event.type === 'changed') {
+      gulp.src(WPCONFIG_FILENAME)
+          .pipe(webpack.configure(wpConfig))
+          .pipe(webpack.overrides(wpOptions))
+          .pipe(webpack.watch(function(err, stats) {
+            gulp.src(this.path, { base: this.base })
+                .pipe(webpack.proxy(err, stats))
+                .pipe(webpack.format(wpFormat))
+                .pipe(gulp.dest(dest));
+          }));
+    }
+  });
 });
 
 gulp.task('server', function () {
@@ -43,3 +64,4 @@ gulp.task('server', function () {
         open: true
       }));
 });
+
