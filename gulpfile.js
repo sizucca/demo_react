@@ -41,18 +41,10 @@ gulp.task('build', function () {
       .pipe(gulp.dest(dest));
 });
 
-gulp.task('hotload', function() {
-  gulp.watch(['src/*/*', 'styles/*']).on('change', function(event) {
+gulp.task('hotload', function () {
+  gulp.watch(['src/*/*', 'styles/*']).on('change', function (event) {
     if (event.type === 'changed') {
-      gulp.src(WPCONFIG_FILENAME)
-          .pipe(webpack.configure(wpConfig))
-          .pipe(webpack.overrides(wpOptions))
-          .pipe(webpack.watch(function(err, stats) {
-            gulp.src(this.path, { base: this.base })
-                .pipe(webpack.proxy(err, stats))
-                .pipe(webpack.format(wpFormat))
-                .pipe(gulp.dest(dest));
-          }));
+      gulp.tasks.default.fn();
     }
   });
 });
