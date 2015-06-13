@@ -5,19 +5,7 @@ var clean = require('gulp-clean');
 var webpack = require('gulp-webpack-build');
 var server = require('gulp-webserver');
 
-var dest = 'build',
-    WPCONFIG_FILENAME = 'webpack.config.js',
-    wpConfig = {
-      useMemoryFs: true,
-      progress: true
-    },
-    wpOptions = {
-      devtool: '#source-map'
-    },
-    wpFormat = {
-      version: true,
-      timings: true
-    };
+var WPCONFIG_FILENAME = 'webpack.config.js';
 
 gulp.task('default', function (callback) {
   sequence('clean', 'build')(callback);
@@ -30,15 +18,8 @@ gulp.task('clean', function () {
 
 gulp.task('build', function () {
   gulp.src(WPCONFIG_FILENAME)
-      .pipe(webpack.configure(wpConfig))
-      .pipe(webpack.overrides(wpOptions))
-      .pipe(webpack.compile())
-      .pipe(webpack.format(wpFormat))
-      .pipe(webpack.failAfter({
-        errors: true,
-        warnings: true
-      }))
-      .pipe(gulp.dest(dest));
+      .pipe(webpack.run())
+      .pipe(gulp.dest(''));
 });
 
 gulp.task('hotload', function () {
