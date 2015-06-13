@@ -1,5 +1,5 @@
 module.exports = {
-  entry: './src/main/entry.js',
+  entry: './src/entry.js',
   output: {
     filename: 'build/bundle.js'
   },
@@ -8,8 +8,11 @@ module.exports = {
     loaders: [
       {test: /\.css$/, loader: 'style!css'},
       {test: /\.styl$/, loader: 'style!css!stylus'},
-      {test: /(\.js$|\.jsx$)/, loader: 'babel?optional[]=runtime'}
+      {test: /(\.js$|\.jsx$)/, loader: 'babel'}
     ]
+  },
+  resolve: {
+    extensions: ['', '.js', '.jsx', '.coffee', '.css', '.styl']
   },
   useMemoryFs: true,
   progress: true

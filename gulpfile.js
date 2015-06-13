@@ -2,10 +2,10 @@ var path = require('path');
 var gulp = require('gulp');
 var sequence = require('gulp-sequence');
 var clean = require('gulp-clean');
-var webpack = require('gulp-webpack-build');
+var webpack = require('webpack-stream');
 var server = require('gulp-webserver');
 
-var WPCONFIG_FILENAME = 'webpack.config.js';
+var WPCONFIG_FILENAME = './webpack.config.js';
 
 gulp.task('default', function (callback) {
   sequence('clean', 'build')(callback);
@@ -17,13 +17,13 @@ gulp.task('clean', function () {
 });
 
 gulp.task('build', function () {
-  gulp.src(WPCONFIG_FILENAME)
-      .pipe(webpack.run())
+  return gulp.src('')
+      .pipe(webpack(require(WPCONFIG_FILENAME)))
       .pipe(gulp.dest(''));
 });
 
 gulp.task('hotload', function () {
-  gulp.watch(['src/*/*', 'styles/*']).on('change', function (event) {
+  gulp.watch(['src/**', 'styles/**']).on('change', function (event) {
     if (event.type === 'changed') {
       gulp.tasks.default.fn();
     }
