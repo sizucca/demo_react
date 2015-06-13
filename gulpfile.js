@@ -13,13 +13,13 @@ gulp.task('default', function (callback) {
 
 gulp.task('clean', function () {
   return gulp.src(['build'])
-      .pipe(clean());
+    .pipe(clean());
 });
 
 gulp.task('build', function () {
   return gulp.src('')
-      .pipe(webpack(require(WPCONFIG_FILENAME)))
-      .pipe(gulp.dest(''));
+    .pipe(webpack(require(WPCONFIG_FILENAME)))
+    .pipe(gulp.dest(''));
 });
 
 gulp.task('hotload', function () {
@@ -32,9 +32,9 @@ gulp.task('hotload', function () {
 
 gulp.task('server', function () {
   gulp.src('.')
-      .pipe(server({
-        livereload: true,
-        open: true
-      }));
+    .pipe(server({
+      livereload: true,
+      open: true
+    }));
 });
 

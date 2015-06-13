@@ -1,4 +1,5 @@
 module.exports = {
+  progress: true,
   entry: './src/entry.js',
   output: {
     filename: 'build/bundle.js'
