@@ -12,7 +12,7 @@ gulp.task('default', function (callback) {
 });
 
 gulp.task('clean', function () {
-  return gulp.src(['build'])
+  return gulp.src(['build/*.js, build/*.js.map'])
       .pipe(clean());
 });
 
@@ -21,13 +21,13 @@ gulp.task('build', function () {
       .pipe(webpack.init({progress: true, useMemoryFs: true}))
       .pipe(webpack.run())
       .pipe(webpack.format({version: true, timings: true}))
-      .pipe(gulp.dest(''));
+      .pipe(gulp.dest('build'));
 });
 
 gulp.task('hotload', function () {
   gulp.watch(['src/**', 'styles/**']).on('change', function (event) {
     if (event.type === 'changed') {
-      gulp.tasks.build.fn();
+      gulp.tasks.default.fn();
     }
   });
 });
