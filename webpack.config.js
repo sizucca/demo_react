@@ -1,5 +1,4 @@
 module.exports = {
-  progress: true,
   entry: './src/entry.js',
   output: {
     filename: 'build/bundle.js'
@@ -14,7 +13,5 @@ module.exports = {
   },
   resolve: {
     extensions: ['', '.js', '.jsx', '.coffee', '.css', '.styl']
-  },
-  useMemoryFs: true,
-  progress: true
+  }
 };
