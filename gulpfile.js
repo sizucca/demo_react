@@ -18,16 +18,16 @@ gulp.task('clean', function () {
 
 gulp.task('build', function () {
   return gulp.src(WPCONFIG_FILENAME)
-      .pipe(webpack.init({progress: true, useMemory: true}))
+      .pipe(webpack.init({progress: true, useMemoryFs: true}))
       .pipe(webpack.run())
-      .pipe(webpack.format({version: false, timings: true}))
+      .pipe(webpack.format({version: true, timings: true}))
       .pipe(gulp.dest(''));
 });
 
 gulp.task('hotload', function () {
   gulp.watch(['src/**', 'styles/**']).on('change', function (event) {
     if (event.type === 'changed') {
-      gulp.tasks.default.fn();
+      gulp.tasks.build.fn();
     }
   });
 });
@@ -39,4 +39,3 @@ gulp.task('server', function () {
         open: true
       }));
 });
-
